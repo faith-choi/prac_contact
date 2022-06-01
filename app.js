@@ -4,10 +4,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 8080;
 
-/* app.get("/", (req, res) => {
-  res.send("Hello World!😋");
-}); */
-
 //DB 세팅
 mongoose.connect(process.env.MONGO_URL);
 const db = mongoose.connection;
@@ -21,7 +17,7 @@ db.on("erre", function () {
 
 //other 세팅
 app.set("view engine", "ejs"); //ejs를 사용하기 위해 express의 view engine에 ejs를 set하는 코드
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/contacts"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 /* app.get("/hello", (req, res) => {
