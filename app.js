@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 const app = express();
 const port = 8080;
 
@@ -20,6 +21,7 @@ app.set("view engine", "ejs"); //ejs를 사용하기 위해 express의 view engi
 app.use(express.static(__dirname + "/contacts"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 /* app.get("/hello", (req, res) => {
   res.render("hello", { name: req.query.nameQuery });//query를 통해 이름을 받는코드. 모든 query는 req.query에 저장됨
 });
@@ -68,6 +70,40 @@ app.post("/contacts", (req, res) => {
   Contact.create(req.body, (err, contact) => {
     if (err) return res.json(err);
     res.redirect("/contacts");
+  });
+});
+
+//보여주는 코드(show)
+app.get("/contacts/:id", (req, res) => {
+  Contact.findOne({ _id: req.params.id }, (err, contact) => {
+    if (err) return res.json(err);
+    res.render("contacts/show.ejs", { contact: contact });
+  });
+});
+
+//수정하는 코드
+app.get("/contacts/:id/edit", (req, res) => {
+  Contact.findOne({ _id: req.params.id }, (err, contact) => {
+    if (err) return res.json(err);
+    res.render("contacts/edit.ejs", { contact: contact });
+  });
+});
+//수정코드
+app.put("/contacts/:id", (req, res) => {
+  Contact.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    (err, contactSchema) => {
+      if (err) return res.json(err);
+      res.redirect("/contacts/" + req.params.id);
+    }
+  );
+});
+
+//지우는 코드(destroy)
+app.delete("/contacts/:id", (req, res) => {
+  Contact.deleteOne({ _id: req.params.id }, (err) => {
+    if (err) return "/contacts";
   });
 });
 

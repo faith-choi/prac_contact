@@ -14,3 +14,6 @@
   display: inline-block;
   width: 70px;
 }
+.contact .contact-menu form {
+  display: inline-block;
+}
