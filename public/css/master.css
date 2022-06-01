@@ -1,0 +1,16 @@
+/* h1 {
+  color: limegreen;
+}
+.stranger {
+  color: brown;
+}
+.name {
+  color: cornflowerblue;
+} */
+.contact h2 {
+  color: coral;
+}
+.contact .contact-form label {
+  display: inline-block;
+  width: 70px;
+}
